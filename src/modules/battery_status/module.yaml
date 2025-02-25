@@ -98,6 +98,63 @@ parameters:
             num_instances: 5
             instance_start: 1
             default: [-0.9,3.0,0.0,1.5,0.2]
+    - group: Pilot Commands
+      definitions:
+        SM_PI_BREAKOUT:
+            description:
+                short: Pilot override breakout value to override GCS commands
+                long: |
+                    Pilot override breakout value to override GCS commands
+
+            type: float
+            decimal: 2
+            default: 0.1
+
+        SM_PI_MODE:
+            description:
+                short: Pilot command modes
+                long: |
+                    Pilot command modes
+
+            type: enum
+            values:
+              1: Transmitter
+              2: GCS Online
+              3: Trainer Mode
+              4: HITL
+            default: 1
+
+        SM_PI_ROT_DIAL:
+            description:
+                short: Synthetic rotary dial value [-1,+1] if one is not present
+                long: |
+                    Synthetic rotary dial value [-1,+1] if one is not present
+
+            type: float
+            decimal: 2
+            default: 0
+
+        SM_AP_SOURCE:
+            description:
+                short: AP left transmitter switch control selector
+                long: |
+                    AP left transmitter switch control selector
+         
+            type: enum
+            values:
+              0: Disabled
+              1: AP TKO
+              2: AP DXN
+              3: AP AXN
+              4: AP LND
+              5: AP NAV
+              6: AP M1
+              7: AP M2
+              8: AP M3
+              9: AP M4
+              10: AP M5
+              11: PI Source
+            default: 0
     - group: TCS
       definitions:
         SM_TCS_K${i}:
@@ -134,7 +191,7 @@ parameters:
             decimal: 2
             num_instances: 6
             instance_start: 1
-            default: [0.1,1.1,1.9,2.0,1.9,0.9]
+            default: [0.1,1.1,1.9,2.0,1.7,0.9]
 
         SM_TCS_TKO${i}:
             description:
@@ -182,7 +239,7 @@ parameters:
             decimal: 2
             num_instances: 4
             instance_start: 1
-            default: [20,5,20,85]
+            default: [60,5,10,80]
 
         SM_TCS_RATE${i}:
             description:
@@ -194,7 +251,32 @@ parameters:
             decimal: 2
             num_instances: 7
             instance_start: 1
-            default: [5,-0.15,0.05,0.1,0.35,4,6]
+            default: [5,-0.15,0.05,0.1,1,4,6]
+
+        SM_TCS_TKO_MD:
+            description:
+                short: TCS takeoff mode (VTOL,STOL,CTOL)
+                long: |
+                    TCS takeoff mode (VTOL,STOL,CTOL)
+
+            type: enum
+            values:
+                1: VTOL
+                2: STOL
+                3: CTOL
+            default: 1
+
+        SM_TCS_OPS${i}:
+            description:
+                short: TCS takeoff and landing operational parameters
+                long: |
+                    TCS takeoff and landing operational parameters
+
+            type: float
+            decimal: 2
+            num_instances: 8
+            instance_start: 1
+            default: [45,0.5,2,0.02,0.1,5,10,35]
     - group: NACELLES
       definitions:
         SM_NAC_${i}:
@@ -365,22 +447,6 @@ parameters:
               6: Fail Prop 6
               7: Fail Lift Props
               8: Fail Main Props
-            default: 0
-
-        SM_AP_SOURCE:
-            description:
-                short: AP left transmitter switch control selector
-                long: |
-                    AP left transmitter switch control selector
-         
-            type: enum
-            values:
-              0: Disabled
-              1: AP TKO
-              2: AP DXN
-              3: AP AXN
-              4: AP LND
-              5: AP NAV
             default: 0
     - group: PII Lateral
       definitions:
@@ -591,8 +657,7 @@ parameters:
                     SIMULINK sensor parameter values
          
             type: float
-            min: 0.0
-            reboot_required: false
+            decimal: 2
             default: 0.3
 
         SM_HDG_OFFSET:
@@ -650,6 +715,18 @@ parameters:
               1: Manual Deriv (zdot)
               2: Veh Odometry (vz)
             default: 0
+
+        SM_VEL_SOURCE:
+            description:
+                short: Ground velocity (vx,vy) sensor source selector
+                long: |
+                    Ground velocity (vx,vy) sensor source selector
+
+            type: enum
+            values:
+              1: Raw GPS Data
+              2: Veh Loc Posn
+            default: 1
     - group: NAV
       definitions:
         SM_NAV_VCMD:
@@ -713,3 +790,28 @@ parameters:
               0: NAV Disabled
               1: NAV Enabled
             default: 0
+    - group: CTOL
+      definitions:
+        SM_NWS_HS_LIM:
+            description:
+                short: Ref NWS HS steering limit in degree
+                long: |
+                    Reference NWS high speed steering limit in degree
+        
+            type: float
+            decimal: 2
+            default: 5
+<<<<<<< HEAD
+
+        SM_SERVO_PWMPERDEG:
+            description:
+                short: Servo PWM per degee of rotation
+                long: |
+                    Servo PWM per degee of rotation
+        
+            type: float
+            decimal: 2
+            default: 10
+            
+=======
+>>>>>>> 4338cf2a656fcf7a3d96eb73503f293df65d0fba

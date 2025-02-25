@@ -2800,11 +2800,12 @@ MavlinkReceiver::handle_message_debug_vect(mavlink_message_t *msg)
 	debug_vect_s debug_topic{};
 
 	debug_topic.timestamp = hrt_absolute_time();
+	debug_topic.id = debug_msg.array_id;
 	memcpy(debug_topic.name, debug_msg.name, sizeof(debug_topic.name));
 	debug_topic.name[sizeof(debug_topic.name) - 1] = '\0'; // enforce null termination
-	debug_topic.x = debug_msg.x;
-	debug_topic.y = debug_msg.y;
-	debug_topic.z = debug_msg.z;
+	for (size_t i = 0; i < debug_vect_s::ARRAY_SIZE; i++) {
+		debug_topic.data[i] = debug_msg.data[i];
+	}
 
 	_debug_vect_pub.publish(debug_topic);
 }
